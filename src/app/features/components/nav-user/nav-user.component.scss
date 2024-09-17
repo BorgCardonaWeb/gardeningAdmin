@@ -1,0 +1,16 @@
+@import "../../../../styles.scss";
+
+.wrap-panel-user {
+    padding-top: 10px;
+    font-weight: 500;
+    color: $color-white;
+    background-color: $color-yellow-header;
+
+    .txt-user-data {
+        cursor: pointer;
+    }
+
+    .txt-user-name {
+        font-size: 1.313rem;
+    }
+}

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gardeningManagement": {
+    "gardeningMalta": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/gardening-management",
+            "outputPath": "dist/gardening-malta",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -25,9 +25,16 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -57,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "gardeningManagement:build:production"
+              "buildTarget": "gardeningMalta:build:production"
             },
             "development": {
-              "buildTarget": "gardeningManagement:build:development"
+              "buildTarget": "gardeningMalta:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -68,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "gardeningManagement:build"
+            "buildTarget": "gardeningMalta:build"
           }
         },
         "test": {
@@ -84,15 +91,22 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": "c0b9045b-0cf2-4d4a-ab22-cacad58a3a5a"
+    "analytics": "eb752b1a-cb2f-4562-bc9a-bd9ed9292448"
   }
 }
