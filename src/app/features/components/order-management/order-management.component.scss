@@ -59,4 +59,23 @@
     cursor: pointer;
     font-weight: 500;
   }
+
+  .wrap-filters {
+    .content-filter {
+      margin-top: 30px;
+    }
+  }
+
+}
+
+
+.title-data {
+  margin-top: 40px;
+  color: $color-yellow-header;
+}
+
+.title-data-warning{
+  color: $color-yellow-header;
+  font-size: 1.5rem;
+  font-weight: 500;
 }

@@ -24,6 +24,10 @@ export class OrdersService {
     );
   }
 
+  getFilteredOrders(filters: { status?: string; paymentType?: string; date?: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/orders/filter`, filters);
+  }
+
   getStorageOrders(): any {
     const data = localStorage.getItem(productskeystorage);
     if(data != "undefined"){

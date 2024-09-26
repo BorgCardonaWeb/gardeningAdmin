@@ -6,29 +6,40 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { PaymentTypeComponent } from '../payment-type/payment-type.component';
 import { GetStatusLabelComponent } from '../get-status-label/get-status-label.component';
-import { modalOption, modalOptionTitle } from '../../../../assets/enums/generalEnums';
+import { modalOption, modalOptionTitle, orderStatus } from '../../../../assets/enums/generalEnums';
 import { GeneralInfoServiceService } from '../../../services/general-info-service.service';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-order-management',
   standalone: true,
-  imports: [MatTableModule,
+  imports: [
+    MatTableModule,
     MatPaginatorModule,
     MatButtonModule,
     CurrencyPipe,
     PaymentTypeComponent,
     GetStatusLabelComponent,
-    CommonModule],
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './order-management.component.html',
-  styleUrl: './order-management.component.scss'
+  styleUrls: ['./order-management.component.scss'] // Corrige `styleUrl` a `styleUrls`
 })
-
 export class OrderManagementComponent implements OnInit {
 
   orders: any;
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['OrderID', 'Status', 'PaymentType', 'Date', 'TotalAmount', 'Actions'];
+
+  uniqueStatuses: any;
+  uniquePaymentTypes: any;
+
+  selectedStatus: string = '';
+  selectedPaymentType: string = '';
+  selectedID: string = '';
+  selectedDate: any;
 
   dataStatus$: Observable<any> | undefined;
 
@@ -44,20 +55,46 @@ export class OrderManagementComponent implements OnInit {
   getOrders() {
     this.orders = this.ordersService.getStorageOrders();
     if (!(this.orders?.length > 0)) {
-      this.ordersService.getAllOrders().subscribe(
-        data => {
-          this.orders = data;
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-        }
-      )
+      this.ordersService.getAllOrders().subscribe(data => {
+        this.orders = data;
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+        this.uniqueStatuses = [orderStatus.pending, orderStatus.rejected, orderStatus.sended, orderStatus.delivered, orderStatus.preparing];
+        this.uniquePaymentTypes = [...new Set(data.map((order: any) => order.PaymentType))];
+      });
     }
+  }
+
+  applyFilter() {
+    const filters = {
+      status: this.selectedStatus,
+      paymentType: this.selectedPaymentType,
+      date: this.selectedDate,
+      id: this.selectedID
+    };
+
+    console.log(filters)
+
+
+    this.ordersService.getFilteredOrders(filters).subscribe(data => {
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  clearFilters() {
+    this.selectedStatus = '';
+    this.selectedPaymentType = '';
+    this.selectedID = "";
+    this.selectedDate = null;
+
+    this.dataSource.filter = '';
+    this.getOrders();
   }
 
   updateSTatusCurrentOrder() {
     this.dataStatus$ = this.ordersService.dastatusCurrentOrder$;
     this.dataStatus$.subscribe(data => {
-
       if (data.orderNumber) {
         const orderIndex = this.dataSource.data.findIndex(order => order.OrderID == data.orderNumber);
         if (orderIndex !== -1) {
@@ -68,8 +105,16 @@ export class OrderManagementComponent implements OnInit {
     });
   }
 
-  openModalOrder(orderNumer: number) {
-    this.generalInfoServiceService.openModal(modalOption.orderDetail, modalOptionTitle.orderDetail, String(orderNumer));
+  openModalOrder(orderNumber: number) {
+    this.generalInfoServiceService.openModal(modalOption.orderDetail, modalOptionTitle.orderDetail, String(orderNumber));
   }
+
+  isNumber(event: KeyboardEvent) {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  }
+  
 
 }
