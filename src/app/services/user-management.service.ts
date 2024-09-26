@@ -35,4 +35,9 @@ export class UserManagementService {
     return JSON.parse(localStorage.getItem(userkeystorage) || '{}');
   }
 
+  getClientByID(clientId: string){
+    const url = 'http://localhost:3000/auth';
+    return this.http.get(`${url}/user/${clientId}`);
+  }
+
 }

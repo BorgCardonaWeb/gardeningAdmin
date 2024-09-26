@@ -6,8 +6,6 @@
         </button>
     </div>
     <div class="modal-body">
-        <!--
-         <app-terms-and-conditions *ngIf="type == 0"></app-terms-and-conditions>
-        -->
+        <app-order-detail-modal  *ngIf="type == 1" [orderNumber]="shortDescription" ></app-order-detail-modal>
     </div>
 </div>

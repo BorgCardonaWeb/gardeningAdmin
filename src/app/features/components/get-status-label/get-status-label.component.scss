@@ -1,0 +1,35 @@
+@import "../../../../styles.scss";
+
+.circle-info{
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}
+
+.txt-status-info{
+    margin-left: 25px;
+}
+
+.Pending{
+    background-color: $color-yellow-header;
+}
+.Rejected{
+    background-color: $color-red-acctions;
+}
+
+.Sended{
+    background-color: $color-blue-tooltip;
+}
+
+.Delivered{
+    background-color: #020069;
+}
+
+
+.Preparing{
+    background-color: $color-green-actions;
+}
+
+
+
+

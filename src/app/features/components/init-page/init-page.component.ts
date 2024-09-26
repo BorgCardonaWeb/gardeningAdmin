@@ -5,7 +5,7 @@ import { FooterComponent } from '../footer/FooterComponent';
 @Component({
   selector: 'app-init-page',
   standalone: true,
-  imports: [LoginComponent, FooterComponent],
+  imports: [LoginComponent],
   templateUrl: './init-page.component.html',
   styleUrl: './init-page.component.scss'
 })

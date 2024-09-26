@@ -1,16 +1,59 @@
 @import "../../../../styles.scss";
 
 .wrap-panel-user {
-    padding-top: 10px;
+    padding-top: 30px;
+    padding-bottom: 10px;
     font-weight: 500;
     color: $color-white;
     background-color: $color-yellow-header;
+    border-bottom: 1px solid $color-green-btns;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
 
-    .txt-user-data {
+    .icon {
         cursor: pointer;
+        font-size: 2rem;
+        position: absolute;
+
+       
     }
 
     .txt-user-name {
-        font-size: 1.313rem;
+        font-size: 2rem;
+    }
+
+    .txt-user-name label {
+        text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-tab-info {
+        color: gray;
+        font-size: 22px;
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: none;
+        cursor: pointer;
+
+        &.active {
+            color: white;
+            font-weight: bold;
+            border-bottom: 1px solid $color-white;
+            border-right: 1px solid $color-white;
+            box-shadow:
+                4px 6px 8px -2px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+
+    .btn-tab-info:hover {
+        color: $color-white;
+    }
+
+    .content-logout-info{
+        margin-top: 2px;
+        text-decoration: underline;
+        margin-left: 45px;
+        cursor: pointer;
+        font-size: 1rem;
     }
 }

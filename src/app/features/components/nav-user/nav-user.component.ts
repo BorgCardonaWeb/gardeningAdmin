@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UserManagementService } from '../../../services/user-management.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-user',
@@ -12,8 +13,11 @@ import { UserManagementService } from '../../../services/user-management.service
 export class NavUserComponent implements OnInit {
 
   userData: any;
+  activeTab: string = 'ordersManagement';
 
-  constructor(private userManagementService: UserManagementService) { }
+
+
+  constructor(private userManagementService: UserManagementService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUserData();
@@ -21,7 +25,22 @@ export class NavUserComponent implements OnInit {
 
   getUserData() {
     this.userData = this.userManagementService.getUser();
-    console.log(this.userData)
   }
+
+  ordersManagementNavigate() {
+    this.activeTab = 'ordersManagement';
+    this.router.navigate(['/home/ordersManagement']);
+  }
+
+  producstManagementNavigate() {
+    this.activeTab = 'productsManagement';
+    this.router.navigate(['/home/productsManagement']);
+  }
+
+  logout(){
+    this.userManagementService.logout();
+    this.router.navigate(['/login']);
+  }
+
 
 }
