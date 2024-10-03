@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { PaymentTypeComponent } from '../payment-type/payment-type.component';
 import { GetStatusLabelComponent } from '../get-status-label/get-status-label.component';
-import { modalOption, modalOptionTitle, orderStatus } from '../../../../assets/enums/generalEnums';
+import { modalOption, modalOptionTitle, orderStatus, paymentType } from '../../../../assets/enums/generalEnums';
 import { GeneralInfoServiceService } from '../../../services/general-info-service.service';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -50,19 +50,19 @@ export class OrderManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getOrders();
     this.updateSTatusCurrentOrder();
+    setTimeout(() => {
+      this.clearFilters();
+    });
   }
 
   getOrders() {
-    this.orders = this.ordersService.getStorageOrders();
-    if (!(this.orders?.length > 0)) {
-      this.ordersService.getAllOrders().subscribe(data => {
-        this.orders = data;
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.uniqueStatuses = [orderStatus.pending, orderStatus.rejected, orderStatus.sended, orderStatus.delivered, orderStatus.preparing];
-        this.uniquePaymentTypes = [...new Set(data.map((order: any) => order.PaymentType))];
-      });
-    }
+    this.ordersService.getAllOrders().subscribe(data => {
+      this.orders = data;
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+      this.uniqueStatuses = [orderStatus.pending, orderStatus.rejected, orderStatus.sended, orderStatus.delivered, orderStatus.preparing];
+      this.uniquePaymentTypes = [paymentType.card, paymentType.cash, paymentType.cardDelivery];
+    });
   }
 
   applyFilter() {
@@ -72,9 +72,6 @@ export class OrderManagementComponent implements OnInit {
       date: this.selectedDate,
       id: this.selectedID
     };
-
-    console.log(filters)
-
 
     this.ordersService.getFilteredOrders(filters).subscribe(data => {
       this.dataSource.data = data;
@@ -87,7 +84,6 @@ export class OrderManagementComponent implements OnInit {
     this.selectedPaymentType = '';
     this.selectedID = "";
     this.selectedDate = null;
-
     this.dataSource.filter = '';
     this.getOrders();
   }
@@ -115,6 +111,6 @@ export class OrderManagementComponent implements OnInit {
       event.preventDefault();
     }
   }
-  
+
 
 }

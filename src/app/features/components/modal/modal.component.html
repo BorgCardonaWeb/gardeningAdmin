@@ -7,5 +7,6 @@
     </div>
     <div class="modal-body">
         <app-order-detail-modal  *ngIf="type == 1" [orderNumber]="shortDescription" ></app-order-detail-modal>
+        <app-edit-product  *ngIf="type == 2" [productInitial]="shortDescription" ></app-edit-product>
     </div>
 </div>

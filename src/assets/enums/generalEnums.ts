@@ -42,10 +42,12 @@ export enum islandType {
 
 export enum modalOption {
   orderDetail = 1,
+  productUpdate = 2,
 }
 
 export enum modalOptionTitle {
   orderDetail = "Order Details",
+  productUpdate = "Update Produtc",
 }
 
 

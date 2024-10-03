@@ -21,4 +21,19 @@ export class ProductsServicesService {
     return this.http.post(url, { productIds });
   }
 
+  getAllProducts(): Observable<any> {
+    const url = `${this.apiUrl}/products/allProducts`;
+    return this.http.get(url);
+  }
+
+  getFilteredProducts(filters: { sku?: string; name?: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/products/filter`, filters);
+  }
+
+  updateProduct(productId: number, updatedData: FormData) {
+    return this.http.put(`${this.apiUrl}/product/product/${productId}`, updatedData);
+  }
+
+
+
 }
