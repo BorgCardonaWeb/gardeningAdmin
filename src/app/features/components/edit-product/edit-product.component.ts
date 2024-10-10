@@ -98,4 +98,8 @@ export class EditProductComponent implements OnInit {
   openFileSelector() {
     this.fileInput.nativeElement.click();
   }
+
+  getImageSrc(base64String: string): string {
+    return `data:image/jpeg;base64,${base64String}`;
+  }
 }
