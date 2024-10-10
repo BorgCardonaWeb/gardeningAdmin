@@ -30,8 +30,8 @@ export class ProductsServicesService {
     return this.http.post(`${this.apiUrl}/products/filter`, filters);
   }
 
-  updateProduct(productId: number, updatedData: FormData) {
-    return this.http.put(`${this.apiUrl}/product/product/${productId}`, updatedData);
+  updateProduct(productId: number, updatedData: any) {
+    return this.http.put(`${this.apiUrl}/products/product/${productId}`, updatedData);
   }
 
 
