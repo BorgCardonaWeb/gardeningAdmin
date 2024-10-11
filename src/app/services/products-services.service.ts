@@ -1,12 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../enviroment/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsServicesService {
+
+  private reloadProductsSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public reloadProducts$: Observable<any> = this.reloadProductsSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -34,6 +37,9 @@ export class ProductsServicesService {
     return this.http.put(`${this.apiUrl}/products/product/${productId}`, updatedData);
   }
 
+  reloadProducts(data: boolean): void {
+    this.reloadProductsSubject.next(data);
+  };
 
 
 }

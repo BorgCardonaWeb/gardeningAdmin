@@ -2,13 +2,15 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ProductsServicesService } from '../../../services/products-services.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-edit-product',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    LoadingComponent
   ],
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.scss']
@@ -18,6 +20,11 @@ export class EditProductComponent implements OnInit {
   @Input() productInitial: any;
   product: any;
   showInitImg = true;
+  loading = false;
+  error = false;
+  success= false;
+  txtAlertError = "";
+
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
@@ -38,19 +45,29 @@ export class EditProductComponent implements OnInit {
   }
 
   updateProduct() {
-
+    this.loading = true;
     const formData = new FormData();
 
     formData.append('name', this.product.name);
     formData.append('shortDescription', this.product?.shortDescription || '');
     formData.append('description', this.product?.description || '');
-    formData.append('active', this.product?.active ? '1' : '0'); 
+    formData.append('active', this.product?.active ? '1' : '0');
     formData.append('image', this.product.image);
 
     this.productsServicesService.updateProduct(this.product.productID, formData).subscribe(data => {
-      console.log("Se editó correctamente");
+      this.loading = false;
+      this.success = true;
+      this.productsServicesService.reloadProducts(true);
+      setTimeout(() => {
+        this.success = false;
+      }, 3000);
     }, (error) => {
-      console.error("Error actualizando el producto:", error);
+      this.loading = false;
+      this.txtAlertError = "An unexpected error occurred";
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
+      }, 5000);
     });
   }
 
@@ -59,7 +76,7 @@ export class EditProductComponent implements OnInit {
     if (event.dataTransfer?.files) {
       const file = event.dataTransfer.files[0];
       if (file && file.type.startsWith('image/')) {
-        this.product.image = file; 
+        this.product.image = file;
         const reader = new FileReader();
         reader.onload = () => {
           this.product.imageSrc = reader.result as string;
@@ -76,9 +93,8 @@ export class EditProductComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       if (file.type.startsWith('image/')) {
-        this.product.image = file; // Guardar el archivo como Blob
+        this.product.image = file;
 
-        // Crear una URL temporal para previsualizar la imagen
         const reader = new FileReader();
         reader.onload = () => {
           this.product.imageSrc = reader.result as string;
@@ -92,11 +108,7 @@ export class EditProductComponent implements OnInit {
   }
 
   onDragOver(event: DragEvent) {
-    event.preventDefault(); // Permitir el drop
-  }
-
-  openFileSelector() {
-    this.fileInput.nativeElement.click();
+    event.preventDefault();
   }
 
   getImageSrc(base64String: string): string {

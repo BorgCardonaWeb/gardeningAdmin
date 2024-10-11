@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { GeneralInfoServiceService } from '../../../services/general-info-service.service';
 import { modalOption, modalOptionTitle } from '../../../../assets/enums/generalEnums';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products-management',
@@ -37,13 +38,26 @@ export class ProductsManagementComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private productsServicesService: ProductsServicesService, 
-    private generalInfoServiceService: GeneralInfoServiceService) {}
+  reloadProductsAction$: Observable<boolean> | undefined;
+  reloadProductsActionSubscription: Subscription | undefined;
+
+  constructor(private productsServicesService: ProductsServicesService,
+    private generalInfoServiceService: GeneralInfoServiceService) { }
 
   ngOnInit(): void {
     this.getAllProducts();
+    this.reloadProducts();
     setTimeout(() => {
       this.clearFilters();
+    });
+  }
+
+  reloadProducts() {
+    this.reloadProductsAction$ = this.productsServicesService.reloadProducts$;
+    this.reloadProductsActionSubscription = this.reloadProductsAction$.subscribe(_data => {
+      if (_data) {
+        this.getAllProducts();
+      }
     });
   }
 
@@ -104,7 +118,7 @@ export class ProductsManagementComponent implements OnInit {
   }
 
   blockSpecialCharacters(event: KeyboardEvent) {
-    const regex = /^[a-zA-Z0-9\s]*$/; 
+    const regex = /^[a-zA-Z0-9\s]*$/;
     const inputChar = String.fromCharCode(event.charCode);
 
     if (!regex.test(inputChar)) {
