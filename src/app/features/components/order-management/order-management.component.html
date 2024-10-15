@@ -34,7 +34,6 @@
       <div class="title-data-warning" *ngIf="dataSource.data.length === 0">*No orders found with the applied filters. Please try adjusting your search criteria.</div>
       <div class="table-container" *ngIf="dataSource.data.length > 0">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          <!-- Column Definitions -->
           <ng-container matColumnDef="OrderID">
             <th mat-header-cell *matHeaderCellDef style="text-align: center; color: white !important;"> ORDER </th>
             <td mat-cell style="text-align: center; font-weight: bold;" *matCellDef="let order">#{{ order.OrderID }}

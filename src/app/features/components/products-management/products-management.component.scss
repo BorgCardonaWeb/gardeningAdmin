@@ -9,6 +9,18 @@
     object-fit: contain;
 }@import "../../../../styles.scss";
 
+.wrap-add{
+  cursor: pointer;
+  label{
+    font-weight: 500;
+    margin-right: 20px;
+  }
+  .icon-add{
+    color: $color-green-actions;
+    font-size: 1.5rem;
+  }
+}
+
 .wrap-orders-panel {
 
   .title-table-info {

@@ -3,6 +3,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { CommonModule } from '@angular/common';
 import { OrderDetailModalComponent } from '../order-detail-modal/order-detail-modal.component';
 import { EditProductComponent } from '../edit-product/edit-product.component';
+import { AddProductComponent } from '../add-product/add-product.component';
 
 @Component({
   selector: 'app-modal',
@@ -10,7 +11,8 @@ import { EditProductComponent } from '../edit-product/edit-product.component';
   imports: [
     CommonModule,
     EditProductComponent,
-    OrderDetailModalComponent
+    OrderDetailModalComponent,
+    AddProductComponent
   ],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'

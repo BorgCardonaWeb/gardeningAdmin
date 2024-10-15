@@ -116,11 +116,17 @@ export class OrderDetailModalComponent implements OnInit {
     return product ? product.name : '';
   }
 
+  getProductSKUById(productID: number): string {
+    const product = this.products?.find((item: any) => item.productID === productID);
+    return product ? product.sku : '';
+  }
+
   getProductsDetail(idsArray: any) {
     this.loading = true;
     this.productsServicesService.getProductsByIds(idsArray).subscribe(
       (data) => {
         this.products = data;
+        console.log(this.products)
         this.loading = false;
       },
       error => {

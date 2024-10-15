@@ -7,7 +7,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { GeneralInfoServiceService } from '../../../services/general-info-service.service';
-import { modalOption, modalOptionTitle } from '../../../../assets/enums/generalEnums';
+import { actions, modalOption, modalOptionTitle } from '../../../../assets/enums/generalEnums';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -38,7 +38,7 @@ export class ProductsManagementComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  reloadProductsAction$: Observable<boolean> | undefined;
+  reloadProductsAction$: Observable<string> | undefined;
   reloadProductsActionSubscription: Subscription | undefined;
 
   constructor(private productsServicesService: ProductsServicesService,
@@ -55,7 +55,10 @@ export class ProductsManagementComponent implements OnInit {
   reloadProducts() {
     this.reloadProductsAction$ = this.productsServicesService.reloadProducts$;
     this.reloadProductsActionSubscription = this.reloadProductsAction$.subscribe(_data => {
-      if (_data) {
+      if (_data == actions.create) {
+        this.getAllProducts();
+        this.generalInfoServiceService.closeModal();
+      } else if (_data == actions.edit) {
         this.getAllProducts();
       }
     });
@@ -67,7 +70,7 @@ export class ProductsManagementComponent implements OnInit {
       (data) => {
         this.products = data;
         this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;  // Asignar el paginador a los datos
+        this.dataSource.paginator = this.paginator;
         this.loading = false;
       },
       () => {
@@ -91,7 +94,7 @@ export class ProductsManagementComponent implements OnInit {
 
     this.productsServicesService.getFilteredProducts(filters).subscribe(data => {
       this.dataSource.data = data;
-      this.dataSource.paginator = this.paginator;  // Asegura que el paginador esté asignado
+      this.dataSource.paginator = this.paginator;
     }, error => {
       this.errorManagement('Error fetching filtered products.');
     });
@@ -127,7 +130,11 @@ export class ProductsManagementComponent implements OnInit {
   }
 
   editProduct(product: any) {
-    this.generalInfoServiceService.openModal(modalOption.productUpdate, modalOptionTitle.productUpdate, product);
+    const title = `${modalOptionTitle.productUpdate} ${product.sku}`;
+    this.generalInfoServiceService.openModal(modalOption.productUpdate, title, product);
   }
 
+  openModalNewProduct() {
+    this.generalInfoServiceService.openModal(modalOption.productCreate, modalOptionTitle.productCreate);
+  }
 }

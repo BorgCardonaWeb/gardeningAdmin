@@ -8,7 +8,7 @@ import { environment } from '../enviroment/environment.prod';
 })
 export class ProductsServicesService {
 
-  private reloadProductsSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private reloadProductsSubject: BehaviorSubject<string> = new BehaviorSubject<string>("");
   public reloadProducts$: Observable<any> = this.reloadProductsSubject.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -37,9 +37,18 @@ export class ProductsServicesService {
     return this.http.put(`${this.apiUrl}/products/product/${productId}`, updatedData);
   }
 
-  reloadProducts(data: boolean): void {
+  createProduct(product: any) {
+    return this.http.post(`${this.apiUrl}/products/create`, product);
+  }
+
+  reloadProducts(data: string): void {
     this.reloadProductsSubject.next(data);
   };
+
+  getCategories(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/categories`);
+  }
+
 
 
 }

@@ -13,13 +13,13 @@ import { Router } from '@angular/router';
 export class NavUserComponent implements OnInit {
 
   userData: any;
-  activeTab: string = 'ordersManagement';
-
+  activeTab = '';
 
 
   constructor(private userManagementService: UserManagementService, private router: Router) { }
 
   ngOnInit(): void {
+    this.validateRouteActive();
     this.getUserData();
   }
 
@@ -37,9 +37,18 @@ export class NavUserComponent implements OnInit {
     this.router.navigate(['/home/productsManagement']);
   }
 
-  logout(){
+  logout() {
     this.userManagementService.logout();
     this.router.navigate(['/login']);
+  }
+  
+  validateRouteActive() {
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('/home/productsManagement')) {
+      this.activeTab = 'productsManagement';
+    } else {
+      this.activeTab = 'ordersManagement';
+    }
   }
 
 

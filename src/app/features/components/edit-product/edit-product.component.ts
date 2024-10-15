@@ -3,6 +3,7 @@ import { ProductsServicesService } from '../../../services/products-services.ser
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from '../loading/loading.component';
+import { actions } from '../../../../assets/enums/generalEnums';
 
 @Component({
   selector: 'app-edit-product',
@@ -57,7 +58,7 @@ export class EditProductComponent implements OnInit {
     this.productsServicesService.updateProduct(this.product.productID, formData).subscribe(data => {
       this.loading = false;
       this.success = true;
-      this.productsServicesService.reloadProducts(true);
+      this.productsServicesService.reloadProducts(actions.edit);
       setTimeout(() => {
         this.success = false;
       }, 3000);
