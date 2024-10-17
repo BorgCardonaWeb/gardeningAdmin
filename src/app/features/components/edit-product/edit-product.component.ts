@@ -42,7 +42,6 @@ export class EditProductComponent implements OnInit {
       this.product.active = false;
     }
 
-    console.log(this.productInitial);
   }
 
   updateProduct() {

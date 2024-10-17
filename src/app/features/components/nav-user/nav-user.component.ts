@@ -37,6 +37,12 @@ export class NavUserComponent implements OnInit {
     this.router.navigate(['/home/productsManagement']);
   }
 
+  bannerManagementNavigate() {
+    this.activeTab = 'bannerManagement';
+    this.router.navigate(['/home/bannerManagement']);
+  }
+
+
   logout() {
     this.userManagementService.logout();
     this.router.navigate(['/login']);
@@ -46,8 +52,10 @@ export class NavUserComponent implements OnInit {
     const currentRoute = this.router.url;
     if (currentRoute.includes('/home/productsManagement')) {
       this.activeTab = 'productsManagement';
-    } else {
+    } else if(currentRoute.includes('/home/ordersManagement')) {
       this.activeTab = 'ordersManagement';
+    }else if(currentRoute.includes('/home/bannerManagement')) {
+      this.activeTab = 'bannerManagement';
     }
   }
 

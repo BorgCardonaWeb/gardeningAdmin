@@ -69,7 +69,6 @@ export class AddProductComponent {
   }
 
   executeUpdate() {
-    console.log(this.getProduct())
      this.productsServicesService.createProduct(this.getProduct()).subscribe(data => {
        this.loading = false;
        this.success = true;

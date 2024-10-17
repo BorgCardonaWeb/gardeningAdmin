@@ -49,6 +49,18 @@ export class ProductsServicesService {
     return this.http.get<any>(`${this.apiUrl}/categories`);
   }
 
+  uploadImage(image: any) {
+    return this.http.post(`${this.apiUrl}/products/uploadBannerImage`, image);
+  }
 
+  getAllBannerImages(): Observable<any> {
+    const url = `${this.apiUrl}/products/allBannerImages`;
+    return this.http.get(url);
+  }
+
+  deleteImageById(imageId: number): Observable<void> {
+    const url = `${this.apiUrl}/products/images/${imageId}`;
+    return this.http.delete<void>(url);
+  }
 
 }
