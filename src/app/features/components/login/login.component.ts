@@ -14,21 +14,34 @@ import { userkeystorage } from '../../../../assets/enums/const';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+
   loginForm: FormGroup;
+  forgotPasswordForm: FormGroup;
+
   loading = false;
-  txtAlertError = "";
   error = false;
+  isForgotPassword = false;
+  alertForgotSUccess = false;
+
+  txtAlertError = "";
 
   constructor(private fb: FormBuilder,
     private userManagementService: UserManagementService,
     private router: Router) {
+
     this.userManagementService.logout();
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required
       ]]
     });
+
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+
   }
 
   onSubmitLogin(): void {
@@ -58,9 +71,26 @@ export class LoginComponent {
   }
 
 
-  forgotPassword() {
-
+  showForgotPassword() {
+    this.isForgotPassword = !this.isForgotPassword;
   }
 
+  forgotPassword(): void {
+    this.loading = true;
+    if (this.forgotPasswordForm.valid) {
+      this.userManagementService.forgotPassword(this.forgotPasswordForm.value.email).subscribe(
+        data=> {
+          this.loading = false;
+          this.alertForgotSUccess = true;
+          setTimeout(() => {
+            this.alertForgotSUccess = false;
+          }, 7000);
+        },
+        error => {
+          this.loading = false;
+          this.errorManagement("User not found");
+        });
+    }
+  }
 
 }

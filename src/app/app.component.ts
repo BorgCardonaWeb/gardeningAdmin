@@ -17,7 +17,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = event.urlAfterRedirects === '/login'; 
+        this.isLoginPage = event.urlAfterRedirects === '/login' || event.urlAfterRedirects.includes('/resetAdmin-password');
       }
     });
   }

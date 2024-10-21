@@ -40,4 +40,13 @@ export class UserManagementService {
     return this.http.get(`${url}/user/${clientId}`);
   }
 
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reset-password`, data);
+  }
+
+
 }

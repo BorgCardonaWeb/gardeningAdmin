@@ -5,9 +5,11 @@ import { HomeComponent } from './features/components/home/home.component';
 import { ProductsManagementComponent } from './features/components/products-management/products-management.component';
 import { OrderManagementComponent } from './features/components/order-management/order-management.component';
 import { BannerManagementComponent } from './features/components/banner-management/banner-management.component';
+import { InitPageRestoreComponent } from './features/components/init-pageRestore/init-page-restore.component';
 
 export const routes: Routes = [
     { path: 'login', component: InitPageComponent },
+    { path: 'resetAdmin-password', component: InitPageRestoreComponent},
     { 
       path: 'home', 
       component: HomeComponent, 
