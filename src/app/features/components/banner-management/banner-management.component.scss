@@ -1,0 +1,63 @@
+@import "../../../../styles.scss";
+
+.wrap-edit-banner {
+    .title-data {
+        margin-top: 40px;
+        color: $color-yellow-header;
+    }
+
+
+    .image-dropzone {
+        border: 2px dashed $color-green-logo;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+    }
+
+    .btn-edit {
+        color: white;
+        background-color: $color-yellow-header;
+    }
+
+
+    .btn-save {
+        margin-top: 20px;
+        color: white;
+        background-color: $color-green-actions;
+    }
+
+    .dgp-text {
+        font-weight: 500;
+    }
+
+    .img-product {
+        max-width: 100%;
+        height: auto;
+        max-height: 150px;
+        object-fit: contain;
+    }
+
+    .content-images {
+        border: 1px solid $color-green-logo;
+        border-radius: 5px;
+        margin: 5px;
+        padding-bottom: 15px;
+    }
+
+    .icon-trash{
+        font-size: 1.5rem;
+        color: $color-red-acctions;
+        float: right;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+}

@@ -1,0 +1,146 @@
+<div  class="alert alert-danger col-3 offset-3" *ngIf="error"  style="position: absolute;" role="alert">
+  {{txtAlertError}}
+</div>
+<app-loading [isLoading]="loading"></app-loading>
+
+<div class="summary-container">
+  <div (click)="toggleCollapseManageOrder()" class="collapse-info-data-manage">
+    Manage Order <i class="icon-tool fa-sharp fa-solid fa-gear"></i>
+    <i *ngIf="isCollapsedManageOrder" class="icon-collapse-info fa-solid fa-plus"></i>
+    <i *ngIf="!isCollapsedManageOrder" class="icon-collapse-info fa-solid fa-minus"></i>
+  </div>
+
+  <div *ngIf="!isCollapsedManageOrder" class="summary-content" style="min-height: 150px;">
+    <form [formGroup]="manageOrderForm" (ngSubmit)="onSubmit()">
+      <div style="margin-bottom: 30px;">
+        <div style="margin-bottom: 10px;"><strong>Current Status:</strong></div>
+        <div>
+          <select id="status" formControlName="status">
+            <option *ngFor="let status of statusOptions" [ngValue]="status">
+              <app-get-status-label [status]="status"></app-get-status-label>
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <div style="margin-bottom: 10px;"><strong>Comments:</strong></div>
+        <div>
+          <textarea id="comments" formControlName="comments"></textarea>
+        </div>
+      </div>
+      <button type="submit" [disabled]="manageOrderForm.invalid">Update Order</button>
+    </form>
+  </div>
+</div>
+
+
+<div class="summary-container">
+  <div (click)="toggleCollapseOrder()" class="collapse-info-data">
+    Order Details
+    <i *ngIf="isCollapsedOrder" class="icon-collapse-info fa-solid fa-plus"></i>
+    <i *ngIf="!isCollapsedOrder" class="icon-collapse-info fa-solid fa-minus"></i>
+  </div>
+
+  <div *ngIf="!isCollapsedOrder" class="summary-content" style="min-height: 150px;">
+    <p><strong>Order:</strong> <span style="font-weight: bold;">&nbsp;#00{{summaryData?.OrderID}}</span></p>
+    <p><strong>Creation Date:</strong> {{summaryData?.Date | date:'dd/MM/yyyy'}}</p>
+    <p><strong>Delivery Status:</strong>
+      <span style="position: absolute;">
+        <app-get-status-label [status]="summaryData?.Status"></app-get-status-label>
+      </span>
+    </p>
+    <p *ngIf="summaryData?.PaymentType"><strong>Payment Method:</strong>
+      <span style="position: absolute;">
+        <app-payment-type [type]="summaryData?.PaymentType"></app-payment-type>
+      </span>
+    </p>
+  </div>
+</div>
+
+<div class="summary-container">
+  <div (click)="toggleCollapse()" class="collapse-info-data">
+    Delivery Details
+    <i *ngIf="isCollapsed" class="icon-collapse-info fa-solid fa-plus"></i>
+    <i *ngIf="!isCollapsed" class="icon-collapse-info fa-solid fa-minus"></i>
+  </div>
+
+  <div *ngIf="!isCollapsed" class="summary-content">
+    <p><strong>Address:</strong> {{summaryData?.DeliveryAddress}}</p>
+    <p><strong>City:</strong> {{summaryData?.City}}</p>
+    <p><strong>Postal Code:</strong> {{summaryData?.PostalCode}}</p>
+    <p><strong>Phone Number:</strong> {{summaryData?.Prefix}}&nbsp;{{summaryData?.Phonenumber}}</p>
+    <p><strong>Island:</strong> {{summaryData?.Island}}</p>
+    <p><strong *ngIf="summaryData?.DeliveryNote !== ''">Delivery Note:</strong> {{summaryData?.DeliveryNote}}</p>
+  </div>
+</div>
+
+<div class="summary-container">
+  <div (click)="toggleCollapseClient()" class="collapse-info-data">
+    Client Details
+    <i *ngIf="isCollapsedClient" class="icon-collapse-info fa-solid fa-plus"></i>
+    <i *ngIf="!isCollapsedClient" class="icon-collapse-info fa-solid fa-minus"></i>
+  </div>
+
+  <div *ngIf="!isCollapsedClient" class="summary-content">
+    <p><strong>Name:</strong> {{cientData?.name}}&nbsp;{{cientData?.lastName}}</p>
+    <p><strong>Phone Number:</strong> {{cientData?.phonePrefix}}&nbsp;{{cientData?.phoneNumber}}</p>
+    <p><strong>Email:</strong> {{cientData?.email}}</p>
+  </div>
+</div>
+
+<div class="summary-container">
+  <div (click)="toggleCollapseProducts()" class="collapse-info-data">
+    Products Details
+    <i *ngIf="isCollapsedProducts" class="icon-collapse-info fa-solid fa-plus"></i>
+    <i *ngIf="!isCollapsedProducts" class="icon-collapse-info fa-solid fa-minus"></i>
+  </div>
+
+  <div *ngIf="!isCollapsedProducts" class="summary-content">
+
+    <div class="container-fluid wrap-detail-cart">
+      <div class="row no-gutters">
+
+        <div *ngIf="summaryData?.arrayProduct" class="content-info-cart col-12 col-sm-12 col-xs-12 col-md-12 col-lg-12">
+          <div *ngFor="let product of summaryData.arrayProduct">
+            <div>
+              <img [src]="getProductImageById(product?.productID)" class="wrap-images card-img-top img-product"
+                alt="{{ product.name}}" />
+            </div>
+            <div class="row">
+              <div class="col-12">
+                {{ getProductNameById(product?.productID) }} - <span class="content-value">{{ product?.value|currency:
+                  'EUR'}}</span> X ({{
+                product?.quantities }})
+              </div>
+              <div class="col-12">
+                <span class="content-value"> {{ getProductSKUById(product?.productID) }}</span>
+              </div>
+
+            </div>
+            <hr class="content-line">
+          </div>
+
+          <div *ngIf="summaryData?.ExtraCostDeliveryGozo == '0.00'" class="total-detail">
+            Total: &nbsp;<span class="content-value">{{ summaryData?.TotalAmount |currency: 'EUR'}}</span>
+          </div>
+
+          <div *ngIf="summaryData?.ExtraCostDeliveryGozo != '0.00'">
+            <div class="total-detail">
+              Subtotal: &nbsp;<span class="content-value">{{ getTotalWithExtraCharge(summaryData?.TotalAmount)
+                |currency: 'EUR'}}</span>
+            </div>
+            <div class="total-detail">
+              <span class="content-value">+{{ 5 |currency: 'EUR'}} Delivery Gozo</span>
+            </div>
+            <div class="total-detail">
+              Total: &nbsp;<span class="content-value">{{ summaryData?.TotalAmount |currency: 'EUR'}}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

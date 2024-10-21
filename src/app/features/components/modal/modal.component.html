@@ -1,0 +1,13 @@
+<div class="wrap-modal wrap-modal-general">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" (click)="modalRef.close()" class="btn-close close pull-right" aria-label="Close">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-order-detail-modal  *ngIf="type == 1" [orderNumber]="shortDescription" ></app-order-detail-modal>
+        <app-edit-product  *ngIf="type == 2" [productInitial]="shortDescription" ></app-edit-product>
+        <app-add-product *ngIf="type == 3"></app-add-product>
+    </div>
+</div>

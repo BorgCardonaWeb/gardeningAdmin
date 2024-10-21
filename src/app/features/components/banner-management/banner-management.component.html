@@ -1,0 +1,37 @@
+<app-loading [isLoading]="loading"></app-loading>
+<div class="alert alert-danger col-3 offset-3" *ngIf="error" style="position: absolute;" role="alert">
+    {{txtAlertError}}
+</div>
+
+<div class="wrap-edit-banner">
+    <div
+        class="col-10 col-sm-10 col-xs-10 col-md-10 col-lg-10 offset-md-1 offset-lg-1 offset-1 offset-sm-1 offset-xs-1">
+        <h1 class="title-data">Notice Panel Update</h1>
+        <div class="row">
+            <div class="wrap-upload-image col-12 col-sm-12 col-xs-12 col-md-12 col-lg-8">
+                <div class="image-dropzone" (drop)="onImageDrop($event)" (dragover)="onDragOver($event)">
+                    <p class="dgp-text">Drag and drop an image here or click to select</p>
+                    <input type="file" (change)="onImageSelect($event)" accept="image/*" style="display: none;"
+                        id="file-input" #fileInput>
+                    <label for="file-input" class="btn btn-secondary btn-edit">Select Image</label>
+                    <div *ngIf="banner?.imageSrc">
+                        <img [src]="banner.imageSrc" class="preview-image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary btn-save" [disabled]="!banner?.imageSrc" (click)="uploadImage()">Upload
+            Image</button>
+    </div>
+
+    <div
+        class="wrap-banner-images col-10 col-sm-10 col-xs-10 col-md-10 col-lg-10 offset-md-1 offset-lg-1 offset-1 offset-sm-1 offset-xs-1" style="margin-top: 20px;">
+        <div class="row">
+            <div *ngFor="let bannerImage of bannerImages" class="col-2 content-images">
+                <i class="fa-solid fa-trash icon-trash" (click)="deleteImage(bannerImage.id)"></i>
+                <img [src]="getImageSrc(bannerImage.image)"class="card-img-top img-product" />
+            </div>
+        </div>
+    </div>
+</div>

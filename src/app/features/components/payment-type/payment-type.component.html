@@ -1,0 +1,18 @@
+<div class="container-fluid wrap-content-header">
+    <div class="row no-gutters">
+        <div *ngIf="isCardDelivery" class="col-12">
+            <i class="type-payment-icon icons-payment fas fa-credit-card" style="color: orange;"></i> 
+            <span class="type-payment-text">Card Payment on Delivery</span>
+        </div>
+
+        <div *ngIf="isCash" class="col-12">
+            <i class="type-payment-icon icons-payment icons-payment-cash fas fa-money-bill-wave" style="color: green;"></i> 
+            <span class="type-payment-text">Pay by Cash</span>
+        </div>
+
+        <div *ngIf="isCard" class="col-12">
+            <i class="type-payment-icon icons-payment fas fa-credit-card" style="color: #0288d1;"></i> 
+            <span class="type-payment-text">Pay by Card</span>
+        </div>
+    </div>
+</div>

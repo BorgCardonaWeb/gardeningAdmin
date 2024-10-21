@@ -1,1 +1,55 @@
-<p>login works!</p>
+<app-loading [isLoading]="loading"></app-loading>
+<div class="wrap-login col-10 col-sm-10 col-xs-10 col-md-10 col-lg-6 offset-1 offset-sm-1 offset-xs-1 offset-md-1 offset-lg-3">
+  <form *ngIf="!isForgotPassword"  class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+      <div class="mb-3">
+        <label for="loginEmail" class="form-label text-login">Email address</label>
+        <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" formControlName="email">
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+          Email is required and must be a valid email address.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="loginPassword" class="form-label text-login">Password</label>
+        <input type="password" id="loginPassword" class="form-control" aria-describedby="passwordHelpBlock"
+          formControlName="password">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+          Password is required.
+        </div>
+      </div>
+      <div class="row" style="text-align: center;">
+        <div class="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6">
+          <button type="submit" class="btn btn-primary btn-login" [disabled]="loginForm.invalid"
+            [ngClass]="{'inactive-class': loginForm.invalid}">Login</button>            
+        </div>
+        <div class="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 hyperlink" (click)="showForgotPassword()"><label>Forgot Password</label></div>
+        
+      </div>
+    </form>
+
+    <form *ngIf="isForgotPassword" class="login-form" [formGroup]="forgotPasswordForm" (ngSubmit)="forgotPassword()">
+      <div class="mb-3">
+        <label for="loginEmail" class="form-label text-login">Email address</label>
+        <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" formControlName="email">
+        <div *ngIf="forgotPasswordForm.get('email')?.invalid && forgotPasswordForm.get('email')?.touched" class="text-danger">
+          Email is required and must be a valid email address.
+        </div>
+      </div>
+      <div class="row" style="text-align: center;">
+        <div class="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6">
+          <button type="submit" class="btn btn-primary btn-login" [disabled]="forgotPasswordForm.invalid"
+            [ngClass]="{'inactive-class': forgotPasswordForm.invalid}">Submit</button>            
+        </div>
+        <div class="col-12 col-sm-12 col-xs-12 col-md-6 col-lg-6 hyperlink" (click)="showForgotPassword()"><label>Back to Login</label></div>
+        
+      </div>
+    </form>
+  </div>
+  <div  class="alert alert-danger col-3 offset-3" *ngIf="error"  style="position: absolute;" role="alert">
+    {{txtAlertError}}
+  </div>
+  <div *ngIf="alertForgotSUccess" class="alert alert-success" style="position: absolute;" role="alert">
+    Please reset your password using the link sent to your email.
+  </div>
+
+
+  

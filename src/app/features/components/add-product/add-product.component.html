@@ -1,0 +1,71 @@
+<app-loading [isLoading]="loading"></app-loading>
+
+<div  class="alert alert-success col-3 offset-3" *ngIf="success"  style="position: absolute;" role="alert">
+    The product was created successfully
+</div>
+
+<div class="container wrap-edit-product">
+  <form (ngSubmit)="createProduct()">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="product.name" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="name">SKU:</label>
+      <input type="text" class="form-control" id="sku" [(ngModel)]="product.sku" name="sku" required>
+    </div>
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <select id="category" name="category" class="form-control" [(ngModel)]="categorySelectet"  (change)="onProductChange($event)">
+        <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subcategory">Subcategory:</label>
+      <select id="subcategory" name="subcategory" class="form-control" [(ngModel)]="subcategorySelectet">
+        <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{subcategory.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="shortDescription">Short Description:</label>
+      <textarea class="form-control" id="shortDescription" [(ngModel)]="product.shortDescription" name="shortDescription" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea class="form-control" style="height: 250px;" id="description" [(ngModel)]="product.description" name="description" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Status:</label>
+      <div>
+        <label>
+          <input type="radio" [(ngModel)]="product.active" name="active" [value]="true"> Active
+        </label>
+        <label>
+          <input type="radio" [(ngModel)]="product.active" name="active" [value]="false"> Inactive
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Image:</label>
+      <div 
+        class="image-dropzone" 
+        (drop)="onImageDrop($event)" 
+        (dragover)="onDragOver($event)"
+      >
+        <p>Drag and drop an image here or click to select</p>
+        <input type="file" (change)="onImageSelect($event)" accept="image/*" style="display: none;" id="file-input" #fileInput>
+        <label for="file-input" class="btn btn-secondary btn-edit">Select Image</label>
+        <div *ngIf="product.imageSrc">
+          <img [src]="product.imageSrc" class="preview-image" />
+        </div>
+      </div>
+    </div>
+    <div  class="alert alert-danger col-3 offset-3" *ngIf="error"  style="position: absolute;" role="alert">
+      {{txtAlertError}}
+    </div>
+    <button type="submit" class="btn btn-primary btn-save">Create Product</button>
+  </form>
+</div>

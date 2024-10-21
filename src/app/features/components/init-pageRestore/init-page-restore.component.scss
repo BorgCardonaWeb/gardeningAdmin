@@ -1,0 +1,12 @@
+@import "../../../../styles.scss";
+
+.wrap-init-page {
+    margin-top: 40px;
+    .logo {
+        max-height: 305px;
+        min-width: 300px;
+        min-height: 200px;
+        margin-left: -10px;
+        margin-bottom: 30px;
+    }
+}

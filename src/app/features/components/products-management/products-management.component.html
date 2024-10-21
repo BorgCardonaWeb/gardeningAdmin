@@ -1,0 +1,77 @@
+<div class="alert alert-danger col-3 offset-3" *ngIf="error" style="position: absolute;" role="alert">
+    {{txtAlertError}}
+  </div>
+  
+  <app-loading [isLoading]="loading"></app-loading>
+  
+  <div class="wrap-orders-panel">
+    <div class="col-10 col-sm-10 col-xs-10 col-md-10 col-lg-10 offset-md-1 offset-lg-1 offset-1 offset-sm-1 offset-xs-1">
+      <h1 class="title-data">Products Management</h1>
+  
+      <div class="content-table">
+        <div class="wrap-filters filter-section mb-3">
+          <div class="row">
+            <div class="content-filter col-12 col-sm-12 col-xs-12 col-md-2 col-lg-2">
+              <input type="text" class="form-control" [(ngModel)]="selectedSku" (input)="applyFilter()" placeholder="SKU" (keypress)="isNumber($event)">
+            </div>
+            <div class="content-filter col-12 col-sm-12 col-xs-12 col-md-2 col-lg-2">
+              <input type="text" class="form-control" [(ngModel)]="selectedName" (input)="applyFilter()" placeholder="Name Product" (keypress)="blockSpecialCharacters($event)">
+            </div>
+            <div class="content-filter col-12 col-sm-12 col-xs-12 col-md-2 col-lg-2">
+              <button class="btn btn-secondary mb-3" (click)="clearFilters()">Clear Filters</button>
+            </div>
+            <div class="content-filter col-12 col-sm-12 col-xs-12 col-md-2 col-lg-2">
+              <p class="wrap-add" (click)="openModalNewProduct()">
+                <label>New Product</label>
+                <i class="fa-solid fa-plus icon-add"></i>
+              </p>
+              
+            </div>
+          </div>
+        </div>
+  
+        <div class="title-data-warning" *ngIf="dataSource.data.length === 0">
+          *No products found with the applied filters. Please try adjusting your search criteria.
+        </div>
+  
+        <div class="table-container" *ngIf="dataSource.data.length > 0">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Column Definitions -->
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef style="text-align: center;"> IMAGE </th>
+              <td mat-cell style="text-align: left;" *matCellDef="let product">
+                <img *ngIf="product.image" [src]="getImageSrc(product.image)" class="card-img-top img-product" alt="{{ product.name}}" />
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="sku">
+              <th mat-header-cell *matHeaderCellDef> SKU </th>
+              <td mat-cell style="text-align: left; font-weight: bold;" *matCellDef="let product">
+                {{ product.sku }}
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> NAME </th>
+              <td mat-cell style="text-align: left; font-weight: bold;" *matCellDef="let product">
+                {{ product.name }}
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> ACTIONS </th>
+              <td mat-cell style="text-align: center;" *matCellDef="let product">
+                <i class="fa-solid fa-pen" style="font-size: 24px; color: orange; cursor: pointer;" (click)="editProduct(product)"></i>
+              </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+  
+          <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+  

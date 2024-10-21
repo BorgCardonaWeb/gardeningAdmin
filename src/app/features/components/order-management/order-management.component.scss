@@ -1,0 +1,81 @@
+@import "../../../../styles.scss";
+
+.wrap-orders-panel {
+
+  .title-table-info {
+    color: $color-blue-actions-header !important;
+  }
+
+  .table-container {
+    overflow-y: auto;
+    margin-top: 50px;
+  }
+
+  .title-table {
+    color: $color-blue-actions-header;
+  }
+
+  .icon-back {
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-left: 30px;
+    margin-top: 20px;
+    color: $orange-acctions;
+  }
+
+  .cdk-row {
+    color: #424242;
+    font-weight: 500;
+    background-color: white;
+  }
+
+  .mat-mdc-header-row {
+    background-color: $color-yellow-header !important;
+    font-weight: bold;
+  }
+
+  ::ng-deep .mat-mdc-paginator-outer-container {
+    background-color: gray !important;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+
+  .mat-mdc-table {
+    border: 1px solid black;
+  }
+
+  ::ng-deep .mdc-button {
+    background-color: $color-blue-tooltip !important;
+  }
+
+  .wrap-amount {
+    font-weight: 500;
+  }
+
+  .order-link {
+    color: $color-blue-tooltip;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .wrap-filters {
+    .content-filter {
+      margin-top: 30px;
+    }
+  }
+
+}
+
+
+.title-data {
+  margin-top: 40px;
+  color: $color-yellow-header;
+}
+
+.title-data-warning{
+  color: $color-yellow-header;
+  font-size: 1.5rem;
+  font-weight: 500;
+}

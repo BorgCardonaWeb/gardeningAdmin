@@ -1,0 +1,50 @@
+@import "../../../../styles.scss";
+
+.wrap-edit-product {
+
+  label {
+    font-weight: 500;
+    color: #010046;
+  }
+
+  form {
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+  }
+
+  .image-dropzone {
+    border: 2px dashed $color-yellow-header;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    .preview-image {
+      max-width: 100%;
+      max-height: 200px;
+      margin-top: 10px;
+    }
+  }
+
+  .btn-edit {
+    color: white;
+    background-color: $color-yellow-header;
+  }
+
+
+  .btn-save {
+    color: white;
+    background-color: $color-green-actions;
+  }
+}

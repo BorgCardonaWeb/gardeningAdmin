@@ -1,1 +1,79 @@
 /* You can add global styles to this file, and also import other style files */
+$color-yellow-header: rgba(251, 188, 30, 1);
+$color-blue-actions-header: rgba(0, 92, 168, 1);
+$color-border-shadow: rgba(0, 0, 0, 0.1);
+$color-blue-tooltip: #0288d1;
+$color-white: #fff;
+$color-green-title: #4db6ac;
+$color-green-logo: #4B7C2A;
+$orange-acctions: #ef6c00;
+$color-red-acctions: #b71c1c;
+$color-green-actions: #43a047;
+$color-gray-actions: #eeeeee;
+$color-green-btns: #28A745;
+$color-red-dark-acctions: #690F18;
+$color-gray-light: #bdbdbd;
+
+html, body, app-root {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .full-height {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-background {
+    background-color: rgba(251, 188, 30, 1);
+  }
+  
+  .default-background {
+    background-color: #fff;
+  }
+
+  
+body {
+    overflow-x: hidden;
+}
+
+.modal {
+    background-color: rgba(76, 85, 102, 0.3);
+    padding: 30px;
+}
+
+h5 {
+    font-size: 1.375rem;
+}
+
+p {
+    font-size: 1rem;
+}
+
+h1 {
+    font-weight: 500;
+}
+
+.modal-title {
+    font-weight: 500;
+}
+
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::ng-deep .mat-mdc-paginator-outer-container{
+    margin-bottom: 150px;
+}
+
+::ng-deep .mat-mdc-paginator-outer-container{
+    min-width: 720px;
+}
