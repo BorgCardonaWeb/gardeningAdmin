@@ -41,6 +41,7 @@ export class EditProductComponent implements OnInit {
     } else {
       this.product.active = false;
     }
+    console.log(this.product)
 
   }
 
