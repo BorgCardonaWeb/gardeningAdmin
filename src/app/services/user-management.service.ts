@@ -16,6 +16,7 @@ export class UserManagementService {
   logout(): void {
     localStorage.removeItem(userkeystorageToken);
     localStorage.removeItem(userkeystorage);
+    localStorage.clear();
   }
 
   getToken(): string | null {

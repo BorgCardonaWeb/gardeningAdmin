@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from '../loading/loading.component';
 import { actions } from '../../../../assets/enums/generalEnums';
+import { allProductskeystorage } from '../../../../assets/enums/const';
 
 @Component({
   selector: 'app-edit-product',
@@ -23,7 +24,7 @@ export class EditProductComponent implements OnInit {
   showInitImg = true;
   loading = false;
   error = false;
-  success= false;
+  success = false;
   txtAlertError = "";
 
 
@@ -41,35 +42,50 @@ export class EditProductComponent implements OnInit {
     } else {
       this.product.active = false;
     }
-    console.log(this.product)
-
   }
 
   updateProduct() {
     this.loading = true;
-    const formData = new FormData();
 
-    formData.append('name', this.product.name);
-    formData.append('shortDescription', this.product?.shortDescription || '');
-    formData.append('description', this.product?.description || '');
-    formData.append('active', this.product?.active ? '1' : '0');
-    formData.append('image', this.product.image);
+    let data = {
+      name: this.product.name,
+      shortDescription: this.product?.shortDescription || '',
+      description: this.product?.description || '',
+      active: this.product?.active ? '1' : '0'
+    }
 
-    this.productsServicesService.updateProduct(this.product.productID, formData).subscribe(data => {
-      this.loading = false;
-      this.success = true;
-      this.productsServicesService.reloadProducts(actions.edit);
+    this.productsServicesService.updateProduct(this.product.productID, data).subscribe(data => {
+      this.uploadImage();
       setTimeout(() => {
         this.success = false;
       }, 3000);
     }, (error) => {
-      this.loading = false;
-      this.txtAlertError = "An unexpected error occurred";
-      this.error = true;
-      setTimeout(() => {
-        this.error = false;
-      }, 5000);
+      this.showError();
     });
+  }
+
+  uploadImage() {
+    this.loading = true;
+    const formData = new FormData();
+
+    formData.append('image', this.product.image);
+
+    this.productsServicesService.uploadProductImage(this.product.productID, formData).subscribe(data => {
+      this.loading = false;
+      localStorage.removeItem(allProductskeystorage);
+      this.productsServicesService.reloadProducts(actions.edit);
+    }, (error) => {
+      this.showError();
+    });
+  }
+
+  showError() {
+    this.loading = false;
+    this.txtAlertError = "An unexpected error occurred";
+    this.error = true;
+    setTimeout(() => {
+      this.error = false;
+    }, 5000);
   }
 
   onImageDrop(event: DragEvent) {

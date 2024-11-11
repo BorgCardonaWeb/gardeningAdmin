@@ -5,7 +5,7 @@
   <app-loading [isLoading]="loading"></app-loading>
   
   <div class="wrap-orders-panel">
-    <div class="col-10 col-sm-10 col-xs-10 col-md-10 col-lg-10 offset-md-1 offset-lg-1 offset-1 offset-sm-1 offset-xs-1">
+    <div class="col-10 col-sm-10 col-xs-10 col-md-8 offset-md-2 col-lg-8 offset-lg-2 offset-1 offset-sm-1 offset-xs-1">
       <h1 class="title-data">Products Management</h1>
   
       <div class="content-table">
@@ -34,7 +34,7 @@
           *No products found with the applied filters. Please try adjusting your search criteria.
         </div>
   
-        <div class="table-container" *ngIf="dataSource.data.length > 0">
+        <div class="col-md-8 col-lg-8" *ngIf="dataSource.data.length > 0">
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <!-- Column Definitions -->
             <ng-container matColumnDef="image">

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from '../loading/loading.component';
 import { actions } from '../../../../assets/enums/generalEnums';
+import { allProductskeystorage } from '../../../../assets/enums/const';
 
 @Component({
   selector: 'app-add-product',
@@ -69,16 +70,14 @@ export class AddProductComponent {
   }
 
   executeUpdate() {
-     this.productsServicesService.createProduct(this.getProduct()).subscribe(data => {
-       this.loading = false;
-       this.success = true;
-       this.productsServicesService.reloadProducts(actions.create);
-       setTimeout(() => {
-         this.success = false;
-       }, 3000);
-     }, (error) => {
-       this.showError("An unexpected error occurred");
-     });
+    this.productsServicesService.createProduct(this.getProduct()).subscribe((data: any) => {
+      this.loading = true;
+      if(data.productId){
+        this.uploadImage(data.productId);
+      }
+    }, (error) => {
+      this.showError("An unexpected error occurred");
+    });
   }
 
   showError(errorMessagge: string) {
@@ -90,16 +89,31 @@ export class AddProductComponent {
     }, 5000);
   }
 
-  getProduct(): any {
+  uploadImage(productId: any) {
     const formData = new FormData();
-    formData.append('name', this.product.name);
-    formData.append('sku', this.product.sku);
-    formData.append('shortDescription', this.product?.shortDescription || '');
-    formData.append('description', this.product?.description || '');
-    formData.append('active', this.product?.active ? '1' : '0');
     formData.append('image', this.product.image);
-    formData.append('subcategoryId', this.subcategorySelectet);
-    return formData;
+
+    this.productsServicesService.uploadProductImage(productId, formData).subscribe(data => {
+      this.loading = false;
+      this.success = true;
+      this.productsServicesService.reloadProducts(actions.create);
+    }, (error) => {
+      this.showError("An unexpected error occurred");
+    });
+  }
+
+  getProduct(): any {
+    return {
+      name: this.product.name,
+      sku: this.product.sku,
+      shortDescription: this.product?.shortDescription || '',
+      description: this.product?.description || '',
+      active: this.product?.active ? '1' : '0',
+      image: '',
+      subcategoryId: this.subcategorySelectet
+    }
+    //formData.append('image', this.product.image);
+
   }
 
   isFormValid(): boolean {

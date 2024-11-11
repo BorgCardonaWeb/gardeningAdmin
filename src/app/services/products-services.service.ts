@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../enviroment/environment.prod';
+import { allProductskeystorage } from '../../assets/enums/const';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class ProductsServicesService {
   }
 
   getAllProducts(): Observable<any> {
-    const url = `${this.apiUrl}/getAllProducts`;
+    const url = `${this.apiUrl}/Allproducts`;
     return this.http.get(url);
   }
 
@@ -34,7 +35,11 @@ export class ProductsServicesService {
   }
 
   updateProduct(productId: number, updatedData: any) {
-    return this.http.put(`${this.apiUrl}/products/product/${productId}`, updatedData);
+    return this.http.put(`${this.apiUrl}/products/${productId}`, updatedData);
+  }
+
+  uploadProductImage(productId: number, image: any) {
+    return this.http.post(`${this.apiUrl}/products/banner/${productId}`, image);
   }
 
   createProduct(product: any) {

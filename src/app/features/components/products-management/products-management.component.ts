@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { GeneralInfoServiceService } from '../../../services/general-info-service.service';
 import { actions, modalOption, modalOptionTitle } from '../../../../assets/enums/generalEnums';
 import { Observable, Subscription } from 'rxjs';
+import { allProductskeystorage } from '../../../../assets/enums/const';
 
 @Component({
   selector: 'app-products-management',
@@ -32,6 +33,7 @@ export class ProductsManagementComponent implements OnInit {
   products: any;
   selectedName: string = '';
   selectedSku: string = '';
+  private isFirstLoad = true;
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['image', 'sku', 'name', 'actions'];
@@ -45,11 +47,12 @@ export class ProductsManagementComponent implements OnInit {
     private generalInfoServiceService: GeneralInfoServiceService) { }
 
   ngOnInit(): void {
-    this.getAllProducts();
-    this.reloadProducts();
-    setTimeout(() => {
-      this.clearFilters();
-    });
+    if (this.isFirstLoad) {
+      this.getAllProducts();
+      this.reloadProducts();
+      this.isFirstLoad = false;
+    }
+    this.clearFilters();
   }
 
   reloadProducts() {
@@ -64,7 +67,7 @@ export class ProductsManagementComponent implements OnInit {
     });
   }
 
-  getAllProducts() {
+  getAllProducts(): any {
     this.loading = true;
     this.productsServicesService.getAllProducts().subscribe(
       (data) => {
@@ -72,13 +75,16 @@ export class ProductsManagementComponent implements OnInit {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
         this.loading = false;
+      
       },
       () => {
         const errorData = "An unexpected error has occurred, please try again.";
         this.errorManagement(errorData);
       }
     );
+
   }
+
 
   clearFilters() {
     this.selectedName = '';
