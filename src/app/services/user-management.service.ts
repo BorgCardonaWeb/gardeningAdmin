@@ -2,19 +2,21 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { userkeystorage, userkeystorageToken } from '../../assets/enums/const';
+import { environment } from '../enviroment/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserManagementService {
 
-  private apiUrl = 'http://localhost:3000/admin-auth';
+  private apiUrl = `${environment.apiUrl}/admin-auth`;
 
   constructor(private http: HttpClient) { }
 
   logout(): void {
     localStorage.removeItem(userkeystorageToken);
     localStorage.removeItem(userkeystorage);
+    localStorage.clear();
   }
 
   getToken(): string | null {
@@ -36,7 +38,7 @@ export class UserManagementService {
   }
 
   getClientByID(clientId: string){
-    const url = 'http://localhost:3000/auth';
+    const url = `${environment.apiUrl}/auth`;
     return this.http.get(`${url}/user/${clientId}`);
   }
 

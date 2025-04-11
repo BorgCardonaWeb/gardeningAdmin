@@ -17,11 +17,7 @@ export class OrdersService {
   apiUrl = `${environment.apiUrl}`;
 
   getAllOrders(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/orders`).pipe(
-      tap((response: any) => {
-        localStorage.setItem(productskeystorage, JSON.stringify(response.user));
-      })
-    );
+    return this.http.get(`${this.apiUrl}/orders`);
   }
 
   getFilteredOrders(filters: { status?: string; paymentType?: string; date?: string }): Observable<any> {
@@ -39,11 +35,11 @@ export class OrdersService {
   }
 
   getOrderById(orderId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/orders/order/${orderId}`);
+    return this.http.get<any>(`${this.apiUrl}/orders/${orderId}`);
   }
 
   updateOrder(orderId: string, updateData: { GeneralNotes: string; Status: string }): Observable<any> {
-    const url = `${this.apiUrl}/orders/order/${orderId}`;
+    const url = `${this.apiUrl}/orders/${orderId}`;
     return this.http.put(url, updateData);
   }
 
