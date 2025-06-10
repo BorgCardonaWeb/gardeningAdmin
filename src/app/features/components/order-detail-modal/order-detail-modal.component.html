@@ -110,8 +110,8 @@
             <div class="row">
               <div class="col-12">
                 {{ getProductNameById(product?.productID) }} - <span class="content-value">{{ product?.value|currency:
-                  'EUR'}}</span> X ({{
-                product?.quantities }})
+                  'EUR'}}</span> 
+                  <span style="color: red;">&nbsp; Quantity ({{product?.quantities }})</span>
               </div>
               <div class="col-12">
                 <span class="content-value"> {{ getProductSKUById(product?.productID) }}</span>
